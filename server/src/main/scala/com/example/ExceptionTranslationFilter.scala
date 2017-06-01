@@ -10,11 +10,12 @@ import com.twitter.util.{Future, NonFatal}
 import javax.inject.Singleton
 
 @Singleton
-class ExceptionTranslationFilter
-  extends ThriftFilter
-  with Logging {
+class ExceptionTranslationFilter extends ThriftFilter with Logging {
 
-  override def apply[T, U](request: ThriftRequest[T], service: Service[ThriftRequest[T], U]): Future[U] = {
+  override def apply[T, U](
+    request: ThriftRequest[T],
+    service: Service[ThriftRequest[T], U]
+  ): Future[U] = {
     service(request).rescue {
       case e: TimeoutException =>
         Future.exception {

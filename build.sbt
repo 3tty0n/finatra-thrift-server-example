@@ -2,6 +2,8 @@ import sbt.Keys._
 
 parallelExecution in ThisBuild := false
 
+scalafmtConfig in ThisBuild := Some(file(".scalafmt.conf"))
+
 lazy val versions = new {
   val finatra = "2.10.0"
   val guice = "4.0"
@@ -28,54 +30,51 @@ lazy val baseSettings = Seq(
   fork in run := true
 )
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "finatra-thrift-server-example",
     organization := "com.example",
     moduleName := "activator-thrift-seed",
     run := {
       (run in `server` in Compile).evaluated
     }
-  ).
-  aggregate(server)
+  )
+  .aggregate(server)
 
-lazy val server = (project in file("server")).
-  settings(baseSettings).
-  settings(
+lazy val server = (project in file("server"))
+  .settings(baseSettings)
+  .settings(
     name := "thrift-server",
     moduleName := "thrift-server",
     mainClass in (Compile, run) := Some("com.example.ExampleServerMain"),
     javaOptions ++= Seq(
       "-Dlog.service.output=/dev/stderr",
-      "-Dlog.access.output=/dev/stderr"),
+      "-Dlog.access.output=/dev/stderr"
+    ),
     libraryDependencies ++= Seq(
       "com.twitter" %% "finatra-thrift" % versions.finatra,
       "ch.qos.logback" % "logback-classic" % versions.logback,
-
       "com.twitter" %% "finatra-thrift" % versions.finatra % "test",
       "com.twitter" %% "inject-app" % versions.finatra % "test",
       "com.twitter" %% "inject-core" % versions.finatra % "test",
       "com.twitter" %% "inject-modules" % versions.finatra % "test",
       "com.twitter" %% "inject-server" % versions.finatra % "test",
       "com.google.inject.extensions" % "guice-testlib" % versions.guice % "test",
-
       "com.twitter" %% "finatra-thrift" % versions.finatra % "test" classifier "tests",
       "com.twitter" %% "inject-app" % versions.finatra % "test" classifier "tests",
       "com.twitter" %% "inject-core" % versions.finatra % "test" classifier "tests",
       "com.twitter" %% "inject-modules" % versions.finatra % "test" classifier "tests",
       "com.twitter" %% "inject-server" % versions.finatra % "test" classifier "tests"
     )
-  ).
-  dependsOn(idl)
+  )
+  .dependsOn(idl)
 
-lazy val idl = (project in file("idl")).
-  settings(baseSettings).
-  settings(
+lazy val idl = (project in file("idl"))
+  .settings(baseSettings)
+  .settings(
     name := "thrift-idl",
     moduleName := "thrift-idl",
-    scroogeThriftDependencies in Compile := Seq(
-      "finatra-thrift_2.11"
-    ),
+    scroogeThriftDependencies in Compile := Seq("finatra-thrift_2.11"),
     libraryDependencies ++= Seq(
       "com.twitter" %% "finatra-thrift" % versions.finatra
     )

@@ -8,7 +8,8 @@ class ExampleServerStartupTest extends FeatureTest {
 
   val server = new EmbeddedThriftServer(
     twitterServer = new ExampleServer,
-    stage = Stage.PRODUCTION)
+    stage = Stage.PRODUCTION
+  )
 
   test("server#startup") {
     server.assertHealthy()
