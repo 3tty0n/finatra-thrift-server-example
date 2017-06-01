@@ -14,4 +14,9 @@ class ExampleServerFeatureTest extends FeatureTest {
   test("service#respond to ping") {
     client.ping().value should be("pong")
   }
+
+  test("service#resond to echo") {
+    val msg = "hoge"
+    client.echo(msg).value should be(msg)
+  }
 }
