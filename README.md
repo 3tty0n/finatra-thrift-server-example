@@ -1,0 +1,1 @@
+# finatra-thrift-server-example
