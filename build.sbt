@@ -79,3 +79,8 @@ lazy val idl = (project in file("idl"))
       "com.twitter" %% "finatra-thrift" % versions.finatra
     )
   )
+
+lazy val client = (project in file("client"))
+  .settings(baseSettings)
+  .settings(name := "thrift-client")
+  .dependsOn(server)
