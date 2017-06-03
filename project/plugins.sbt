@@ -6,4 +6,4 @@ resolvers ++= Seq(
 )
 
 addSbtPlugin("com.twitter" % "scrooge-sbt-plugin" % "4.15.0")
-addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "0.4.8")
+addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "0.6.8")

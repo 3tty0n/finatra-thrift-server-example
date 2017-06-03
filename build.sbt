@@ -2,8 +2,6 @@ import sbt.Keys._
 
 parallelExecution in ThisBuild := false
 
-scalafmtConfig in ThisBuild := Some(file(".scalafmt.conf"))
-
 lazy val versions = new {
   val finatra = "2.10.0"
   val guice = "4.0"
