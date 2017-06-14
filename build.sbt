@@ -18,11 +18,7 @@ lazy val baseSettings = Seq(
   scalaVersion := "2.11.11",
   ivyScala := ivyScala.value.map(_.copy(overrideScalaVersion = true)),
   libraryDependencies ++= Seq(
-    "junit" % "junit" % versions.junit % "test",
-    "org.mockito" % "mockito-core" % versions.mockito % "test",
-    "org.scalacheck" %% "scalacheck" % versions.scalacheck % "test",
-    "org.scalatest" %% "scalatest" % versions.scalatest % "test",
-    "org.specs2" %% "specs2-mock" % versions.specs2 % "test"
+    "org.scalatest" %% "scalatest" % versions.scalatest % "test"
   ),
   resolvers += Resolver.sonatypeRepo("releases"),
   fork in run := true
@@ -74,7 +70,10 @@ lazy val idl = (project in file("idl"))
     moduleName := "thrift-idl",
     scroogeThriftDependencies in Compile := Seq("finatra-thrift_2.11"),
     libraryDependencies ++= Seq(
-      "com.twitter" %% "finatra-thrift" % versions.finatra
+      "org.apache.thrift" % "libthrift" % "0.9.2",
+      "com.twitter" %% "scrooge-core" % "4.6.0" exclude("com.twitter", "libthrift"),
+      "com.twitter" %% "finagle-thrift" % "6.34.0" exclude("com.twitter", "libthrift"),
+      "com.twitter" %% "finatra-thrift" % versions.finatra exclude("com.twitter", "libthrift")
     )
   )
 
